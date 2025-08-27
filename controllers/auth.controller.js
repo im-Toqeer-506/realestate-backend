@@ -3,6 +3,19 @@ import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
+
+// controllers/auth.controller.js
+export const registerController = async (req, res) => {
+  try {
+    const { username, email, password } = req.body;
+    // implement user creation logic here
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
   if (!username || !email || !password) {

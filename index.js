@@ -2,16 +2,16 @@ import express from 'express';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import path from 'path';
 import cors from 'cors';
+
 // Import routes
 import userRouter from './routes/user.route.js';
 import authRoutes from './routes/auth.routes.js';
 import listingRouter from './routes/listing.route.js';
 
+// Load environment variables from .env in the same folder
+dotenv.config();
 
-// Load environment variables
-dotenv.config({ path: path.resolve('./api/.env') }); // make sure path is correct
 console.log('MONGO_URI:', process.env.MONGO_URI);
 
 if (!process.env.MONGO_URI) {
@@ -28,22 +28,19 @@ mongoose.connect(process.env.MONGO_URI)
   });
 
 const app = express();
-const __dirname = path.resolve();
 
 // Middleware
 app.use(express.json());
 app.use(cookieParser());
-
-// API Routes
-
 app.use(cors({
-origin: [
-    "http://localhost:5173", // local dev
-    "https://project-estate.netlify.app" // deployed frontend
+  origin: [
+    "http://localhost:5173",
+    "https://estate-real-project.netlify.app"
   ],
-
-  credentials: true, 
+  credentials: true,
 }));
+
+// Routes
 app.use('/api/user', userRouter);
 app.use('/api/auth', authRoutes);
 app.use('/api/listing', listingRouter);
@@ -58,10 +55,10 @@ app.use((err, req, res, next) => {
   });
 });
 
+// Test route
 app.get('/api/auth/test', (req, res) => {
   res.send({ message: 'Backend is working!' });
 });
-
 
 // Start server
 const PORT = process.env.PORT || 3000;
