@@ -3,13 +3,10 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-
-// Import routes
 import userRouter from './routes/user.route.js';
 import authRoutes from './routes/auth.routes.js';
 import listingRouter from './routes/listing.route.js';
 
-// Load environment variables from .env in the same folder
 dotenv.config();
 
 console.log('MONGO_URI:', process.env.MONGO_URI);
@@ -42,8 +39,9 @@ app.use(cors({
 
 // Routes
 app.use('/api/user', userRouter);
-app.use('/api/auth', authRoutes);
-app.use('/api/listing', listingRouter);
+app.use('/api/auth', authRouter);
+app.use('/api/listings', listingRouter);
+
 
 // Error handler
 app.use((err, req, res, next) => {

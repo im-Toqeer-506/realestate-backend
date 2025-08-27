@@ -4,7 +4,7 @@ import {
   deleteListing,
   updateListing,
   getListing,
-  getListings, // <- make sure this matches your controller
+  getListings, 
 } from '../controllers/listing.controller.js';
 
 const router = express.Router();
