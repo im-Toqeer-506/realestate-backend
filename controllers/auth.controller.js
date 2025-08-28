@@ -3,18 +3,14 @@ import bcryptjs from 'bcryptjs';
 import { errorHandler } from '../utils/error.js';
 import jwt from 'jsonwebtoken';
 
-
-// controllers/auth.controller.js
 export const registerController = async (req, res) => {
   try {
     const { username, email, password } = req.body;
-    // implement user creation logic here
     res.status(201).json({ message: "User registered successfully" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
-
 
 export const signup = async (req, res, next) => {
   const { username, email, password } = req.body;
@@ -47,13 +43,12 @@ export const signin = async (req, res, next) => {
     res
       .cookie('access_token', token, { httpOnly: true })
       .status(200)
-      .json(rest); // includes avatar now
+      .json(rest); 
   } catch (error) {
     next(error);
   }
 };
 
-// controllers/auth.controller.js
 export const google = async (req, res) => {
   try {
     const { name, email, photo } = req.body;
@@ -73,7 +68,6 @@ export const google = async (req, res) => {
     res.status(500).json({ message: "Google login failed", error: err.message });
   }
 };
-
 
 export const signOut = async (req, res, next) => {
   try {

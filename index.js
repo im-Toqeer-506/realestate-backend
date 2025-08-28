@@ -1,4 +1,4 @@
-// index.js
+
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -6,17 +6,14 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import path from "path";
 
-// Import your routers
 import authRouter from "./routes/auth.routes.js";
 import userRouter from "./routes/user.route.js";
 import listingRouter from "./routes/listing.route.js";
 
-// Load environment variables
 dotenv.config({ path: path.resolve(".env") });
 
 const app = express();
 
-// Middleware
 app.use(express.json());
 app.use(cookieParser());
 
@@ -26,17 +23,14 @@ app.use(cors({
 }));
 
 
-// Routes
 app.use("/api/auth", authRouter);
 app.use("/api/user", userRouter);
 app.use("/api/listing", listingRouter);
 
-// Default route
 app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
 
-// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
