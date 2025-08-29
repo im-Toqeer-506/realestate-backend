@@ -18,11 +18,21 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Allow specific frontend domain
+const allowedOrigins = [
+  "https://estate-real-project.netlify.app",
+  "http://localhost:5173",
+];
+
 app.use(cors({
-  origin: "https://estate-real-project.netlify.app",
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
-}
-));
+}));
 
 
 app.use("/api/auth", authRouter);
